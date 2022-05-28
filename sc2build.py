@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 import difflib
 
-class Commanders:
+class Commanders: #not entirely sure this class was necessary
     def __init__(self):
         self.address_list = []
         self.truenames = []
@@ -12,8 +12,8 @@ class Commanders:
         page = requests.get("https://starcraft2coop.com/")
         HTML_content = bs(page.content, "html.parser")
         commander_container = HTML_content.find(id="commanderList")
-        commander_list = commander_container.find_all("img")
 
+        commander_list = commander_container.find_all("img")
         for alt_name in commander_list:
             self.truenames.append(alt_name["alt"].replace(" Portrait", ""))
 
@@ -40,7 +40,6 @@ def search_commanders(search_term):
         search_results = sorted(search_results, key=lambda l:l[1], reverse=True)
         print(f"Did you mean: {search_results[0][0]}? ({int(search_results[0][1] * 100)}%)")
         return search_results[0][0]
-
 
 def main():
     commander = search_commanders(input("Commander: "))
